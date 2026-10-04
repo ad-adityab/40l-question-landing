@@ -1,0 +1,12 @@
+{
+  "name": "40l-question-landing",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Landing page for The 40L Question, with the Ask the 40L demo (Vercel + Gemini + Supabase).",
+  "type": "module",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "test": "node tests/ask.test.js",
+    "dev": "node tests/dev-server.js"
+  }
+}

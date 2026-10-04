@@ -115,6 +115,40 @@ footer{border-top:1px solid var(--line);padding:24px 0 40px;font-size:14px;color
 footer p+p{margin-top:6px}
 
 /*ASK-CSS-START*/
+/* Ask the 40L (Task 4 feature) */
+.ask-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:28px;margin-top:36px;align-items:start}
+.askbox{background:var(--card);border:2px solid var(--ink);border-radius:18px;padding:24px;box-shadow:6px 6px 0 var(--ink)}
+.askbox label{display:block;font:700 15px var(--body);margin-bottom:10px}
+.askrow{display:flex;gap:10px}
+.askrow input{flex:1;min-width:0;font:16px var(--body);color:var(--ink);background:var(--ground);border:2px solid var(--ink);border-radius:12px;padding:13px 14px}
+.askrow input:focus{outline:3px solid var(--orange);outline-offset:1px}
+.askrow .btn{padding:12px 18px;box-shadow:3px 3px 0 var(--ink);background:var(--orange);white-space:nowrap}
+.askrow .btn[disabled]{opacity:.55;cursor:wait}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{font:600 13px var(--body);color:var(--ink);background:var(--ground);border:1.5px solid var(--ink);border-radius:999px;padding:6px 12px;cursor:pointer;text-align:left}
+.chip:hover{background:var(--melon)}
+.meta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--ink-2);margin-top:12px}
+.result{margin-top:20px;border-top:1px dashed var(--line);padding-top:18px;display:none}
+.result.show{display:block}
+.result .tag{margin-bottom:10px}
+.tag.ref{background:#F0E4DE;color:#7A5A52}
+.tag.nf{background:var(--melon);color:var(--ink-2)}
+.tag.cap{background:var(--blush);color:var(--red)}
+.result .ans{font-size:17px;line-height:1.55}
+.result .cites{margin:14px 0 0;padding:0;list-style:none;display:grid;gap:8px}
+.result .cites li{font-size:14px;color:var(--ink-2);background:var(--ground);border:1px solid var(--line);border-radius:10px;padding:8px 12px}
+.result .cites b{color:var(--ink)}
+.result .err{color:var(--red);font-weight:600}
+.stats{display:grid;gap:16px}
+.stat{background:var(--ink);color:var(--ground);border-radius:16px;padding:22px}
+.stat .n{font:800 46px/1 var(--display);color:var(--orange)}
+.stat p{margin-top:8px;color:#EBD3C9;font-size:15px}
+.stat.light{background:var(--melon);color:var(--ink);border:1.5px solid var(--ink)}
+.stat.light .n{color:var(--red)}
+.stat.light p{color:var(--ink-2)}
+.ask-note{font-size:13px;color:var(--ink-2);margin-top:14px}
+@media (max-width:900px){.ask-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}}
+@media (max-width:480px){.askrow{flex-direction:column}.askrow .btn{width:100%;justify-content:center}.stats{grid-template-columns:1fr}.askbox{padding:18px}}
 /*ASK-CSS-END*/
 
 @media (max-width:900px){
@@ -145,7 +179,7 @@ footer p+p{margin-top:6px}
   <a class="brand" href="#top"><span class="mark">40L</span><span class="long">The 40L Question</span></a>
   <nav aria-label="Sections">
     <a class="pill hide-sm" href="#how">How it works</a>
-    <!--ASK-NAV-START--><!--ASK-NAV-END-->
+    <!--ASK-NAV-START--><a class="pill" href="#ask">Ask the 40L</a><!--ASK-NAV-END-->
     <a class="pill" href="https://thebettercampus.netlify.app/40L_ROI/">Open the page</a>
   </nav>
 </header>
@@ -160,7 +194,7 @@ footer p+p{margin-top:6px}
       <p class="promise">The placement group has around 400 people, and most of what they post is noise. The 40L Question keeps only the official answers from the CAC and CAS and puts them on one page: the day's brief, every deadline with a countdown, and the placement rules you can search.</p>
       <div class="btns">
         <a class="btn primary" href="https://thebettercampus.netlify.app/40L_ROI/">Open The 40L Question →</a>
-        <!--ASK-HERO-START--><a class="btn ghost" href="#how">See how it works</a><!--ASK-HERO-END-->
+        <!--ASK-HERO-START--><a class="btn ghost" href="#ask">Try Ask the 40L</a><!--ASK-HERO-END-->
       </div>
       <p class="fine">A student side project for the ISB Co'27 cohort. Not an official ISB, CAS or CAC product.</p>
     </div>
@@ -263,6 +297,37 @@ One link. No scrolling. Not answered yet? Ask in the group, like always.</p>
 </section>
 
 <!--ASK-SECTION-START-->
+<section id="ask">
+  <div class="wrap">
+    <span class="eyebrow">Try it · Ask the 40L</span>
+    <h2>Ask a placement question. Get the official answer, or an honest "not yet".</h2>
+    <p class="lede">A demo of the core promise. Ask the 40L answers only from the Placement Policy and the general answers the CAC and CAS have given, and shows which entry it used. If they haven't answered, it says so.</p>
+    <div class="ask-grid">
+      <div class="askbox">
+        <form id="askForm" autocomplete="off">
+          <label for="q">Your question</label>
+          <div class="askrow">
+            <input id="q" name="q" maxlength="300" placeholder="e.g. How many counters do I get in P1?" required>
+            <button class="btn" id="askBtn" type="submit">Ask →</button>
+          </div>
+        </form>
+        <div class="chips" aria-label="Example questions">
+          <button class="chip" type="button">When is placement week?</button>
+          <button class="chip" type="button">Can I write my CGPA on my resume?</button>
+          <button class="chip" type="button">What happens if I miss a PPT?</button>
+          <button class="chip" type="button">What is a blue tag job?</button>
+        </div>
+        <div class="meta"><span id="left">5 questions per visitor</span><span id="chars">0 / 300</span></div>
+        <div class="result" id="result" aria-live="polite"></div>
+        <p class="ask-note">Questions are stored without your name or email so the counter and the limits work. Don't type names or personal details. Answers can be wrong or out of date: the CAC notice board and CAS are the final word.</p>
+      </div>
+      <div class="stats" aria-label="Live numbers from the demo">
+        <div class="stat"><div class="n" id="statAsked">–</div><p>questions asked so far</p></div>
+        <div class="stat light"><div class="n" id="statShare">–</div><p>of placement questions answered from an official source. The rest got "Not answered yet. Ask in the group."</p></div>
+      </div>
+    </div>
+  </div>
+</section>
 <!--ASK-SECTION-END-->
 
 <div class="wrap">
@@ -286,6 +351,58 @@ One link. No scrolling. Not answered yet? Ask in the group, like always.</p>
 </footer>
 
 <!--ASK-JS-START-->
+<script>
+(function(){
+  var form=document.getElementById('askForm'), q=document.getElementById('q'), btn=document.getElementById('askBtn');
+  var out=document.getElementById('result'), left=document.getElementById('left'), chars=document.getElementById('chars');
+  var CAP=5;
+  function vid(){
+    var v=null;
+    try{ v=localStorage.getItem('ask40l_vid'); }catch(e){}
+    if(!v){
+      v=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():('x'+Date.now().toString(16)+Math.random().toString(16).slice(2)).slice(0,32);
+      try{ localStorage.setItem('ask40l_vid',v); }catch(e){}
+    }
+    return v;
+  }
+  var VID=vid();
+  function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  function label(src){return src==='Policy'?'Placement Policy':(src==='CAS'?'CAS answer in the group':'CAC answer in the group');}
+  function setLeft(n){ if(typeof n==='number'){ left.textContent = n>0 ? (n+' question'+(n===1?'':'s')+' left') : 'No questions left'; } }
+  function stats(){
+    fetch('/api/stats').then(function(r){return r.ok?r.json():null;}).then(function(d){
+      if(!d) return;
+      document.getElementById('statAsked').textContent=d.asked.toLocaleString('en-IN');
+      document.getElementById('statShare').textContent=(d.asked?d.share_answered+'%':'–');
+    }).catch(function(){});
+  }
+  q.addEventListener('input',function(){chars.textContent=q.value.length+' / 300';});
+  Array.prototype.forEach.call(document.querySelectorAll('#ask .chip'),function(c){
+    c.addEventListener('click',function(){q.value=c.textContent;chars.textContent=q.value.length+' / 300';form.requestSubmit?form.requestSubmit():form.dispatchEvent(new Event('submit'));});
+  });
+  form.addEventListener('submit',function(ev){
+    ev.preventDefault();
+    var question=q.value.trim(); if(question.length<3){q.focus();return;}
+    btn.disabled=true; btn.textContent='Checking…';
+    out.className='result show'; out.innerHTML='<p style="color:var(--ink-2)">Looking through the official answers…</p>';
+    var ctrl=new AbortController(); var t=setTimeout(function(){ctrl.abort();},20000);
+    fetch('/api/ask',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:question,visitor_id:VID}),signal:ctrl.signal})
+      .then(function(r){return r.json().catch(function(){return {error:'Something went wrong. Try again in a minute.'};});})
+      .then(function(d){
+        if(d.error){ out.innerHTML='<p class="err">'+esc(d.error)+'</p>'; return; }
+        var tag={answered:['ans','Official answer'],not_found:['nf','Not answered yet'],refused:['ref','Outside what I answer'],capped:['cap','Limit reached']}[d.status]||['nf',''];
+        var html='<span class="tag '+tag[0]+'">'+tag[1]+'</span><p class="ans">'+esc(d.answer)+'</p>';
+        if(d.cited&&d.cited.length){
+          html+='<ul class="cites">'+d.cited.map(function(c){return '<li><b>'+esc(label(c.source))+'</b> · '+esc(c.question||c.id)+'</li>';}).join('')+'</ul>';
+        }
+        out.innerHTML=html; setLeft(d.remaining); stats();
+      })
+      .catch(function(){ out.innerHTML='<p class="err">That took too long. Try again in a minute.</p>'; })
+      .finally(function(){ clearTimeout(t); btn.disabled=false; btn.textContent='Ask →'; });
+  });
+  stats();
+})();
+</script>
 <!--ASK-JS-END-->
 </body>
 </html>
