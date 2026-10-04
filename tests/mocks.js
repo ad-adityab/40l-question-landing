@@ -28,6 +28,7 @@ export function installMocks({ entriesFile, gemini = "scripted", log = false } =
         if (op === "eq") return String(x) === val;
         if (op === "neq") return String(x) !== val;
         if (op === "gte") return String(x) >= val;
+        if (op === "in") return val.replace(/^\(|\)$/g, "").split(",").includes(String(x));
         return true;
       });
     }

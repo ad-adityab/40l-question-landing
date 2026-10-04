@@ -24,11 +24,12 @@ export default async function handler(req, res) {
   const started = Date.now();
 
   try {
-    // ---- caps (capped requests are stored too, but never count toward any cap) ----
+    // ---- caps: only real answers count (capped and error rows are stored but never count) ----
+    const REAL = "outcome=in.(answered,not_found,refused)";
     const [mine, network, today] = await Promise.all([
-      sbCount("exchanges", `visitor_id=eq.${visitor}&outcome=neq.capped`),
-      sbCount("exchanges", `net_hash=eq.${net}&created_at=gte.${since}&outcome=neq.capped`),
-      sbCount("exchanges", `created_at=gte.${since}&outcome=neq.capped`)
+      sbCount("exchanges", `visitor_id=eq.${visitor}&${REAL}`),
+      sbCount("exchanges", `net_hash=eq.${net}&created_at=gte.${since}&${REAL}`),
+      sbCount("exchanges", `created_at=gte.${since}&${REAL}`)
     ]);
     let capMsg = null;
     if (mine >= PER_VISITOR_CAP) capMsg = `You've used all ${PER_VISITOR_CAP} questions for this demo. The full FAQ is on The 40L Question page.`;
@@ -62,8 +63,9 @@ export default async function handler(req, res) {
     });
   } catch (err) {
     console.error("ask failed:", err.message);
-    try { await sbInsert("exchanges", row({ visitor, net, question, answer: String(err.message).slice(0, 200), outcome: "error", started })); } catch {}
-    return res.status(502).json({ error: "Something went wrong. Try again in a minute." });
+    try { await sbInsert("exchanges", row({ visitor, net, question, answer: String(err.message).slice(0, 300), outcome: "error", started })); } catch {}
+    // A short, non-secret code (e.g. "gemini 429") helps debugging without exposing anything.
+    return res.status(502).json({ error: "Something went wrong. Try again in a minute.", code: String(err.message).split(":")[0].slice(0, 40) });
   }
 }
 

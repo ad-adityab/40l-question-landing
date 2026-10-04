@@ -54,7 +54,7 @@ function sbUrl(path) {
 }
 export async function sbSelect(path) {
   const r = await fetch(sbUrl(path), { headers: sbHeaders() });
-  if (!r.ok) throw new Error(`supabase select ${r.status}`);
+  if (!r.ok) throw new Error(`supabase select ${r.status}: ${(await r.text().catch(() => "")).slice(0, 200)}`);
   return r.json();
 }
 export async function sbCount(table, filter = "") {
@@ -72,7 +72,7 @@ export async function sbInsert(table, row) {
     headers: sbHeaders({ Prefer: "return=minimal" }),
     body: JSON.stringify(row)
   });
-  if (!r.ok) throw new Error(`supabase insert ${r.status}`);
+  if (!r.ok) throw new Error(`supabase insert ${r.status}: ${(await r.text().catch(() => "")).slice(0, 200)}`);
 }
 
 // ---------- retrieval: pick the 5 most relevant official entries ----------
@@ -131,7 +131,10 @@ export async function askGemini(question, candidates) {
     headers: { "Content-Type": "application/json", "x-goog-api-key": process.env.GEMINI_API_KEY },
     body: JSON.stringify(body)
   });
-  if (!r.ok) throw new Error(`gemini ${r.status}`);
+  if (!r.ok) {
+    const detail = (await r.text().catch(() => "")).replace(/\s+/g, " ").slice(0, 200);
+    throw new Error(`gemini ${r.status}: ${detail}`);
+  }
   const data = await r.json();
   const text = data?.candidates?.[0]?.content?.parts?.map(p => p.text || "").join("") || "";
   const usage = data?.usageMetadata || {};

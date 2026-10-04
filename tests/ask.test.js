@@ -73,6 +73,16 @@ await t("stats reads back asked and share answered (capped rows excluded)", asyn
   const a = real.filter(x => x.outcome === "answered").length, nf = real.filter(x => x.outcome === "not_found").length;
   assert.equal(r.body.asked, real.length); assert.equal(r.body.share_answered, Math.round(a / (a + nf) * 100));
 });
+await t("an upstream error is stored but does not use up the visitor's questions", async () => {
+  const V3 = "0f8e2a1c-4b7d-4e2a-9c1d-dddddddddddd";
+  const real = globalThis.fetch;
+  globalThis.fetch = async (u, o) => String(u).includes("generativelanguage") ? new Response("quota", { status: 429 }) : real(u, o);
+  const r = await call(ask, { body: { question: "When is placement week?", visitor_id: V3 }, ip: "7.7.7.7" });
+  globalThis.fetch = real;
+  assert.equal(r.status, 502); assert.match(r.body.code, /gemini 429/);
+  const ok = await call(ask, { body: { question: "When is placement week?", visitor_id: V3 }, ip: "7.7.7.7" });
+  assert.equal(ok.body.remaining, 4);
+});
 await t("missing env vars fail safely", async () => {
   const k = process.env.GEMINI_API_KEY; delete process.env.GEMINI_API_KEY;
   const r = await call(ask, { body: { question: "When is placement week?", visitor_id: V2 } });
