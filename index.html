@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The 40L Question · Answers worth your fee</title>
+<meta name="description" content="One page for ISB placement season: the day's official answers, every deadline with a countdown, and the placement rules, searchable. Only CAC and CAS answers count.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ground:#FFF9F4; --ink:#3B1A14; --ink-2:#6E4038; --red:#A60303; --orange:#F28322;
+  --blush:#F5C1C1; --apricot:#F5D2C1; --melon:#F5D9C1; --line:#F0D6C8; --card:#FFFFFF;
+  --display:"Bricolage Grotesque","Arial Rounded MT Bold",system-ui,sans-serif;
+  --body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--ground);color:var(--ink);font:17px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+section{padding:72px 0;border-top:1px solid var(--line)}
+h1,h2,h3{font-family:var(--display);line-height:1.08;margin:0;letter-spacing:-.01em}
+h2{font-size:clamp(28px,4.2vw,42px);font-weight:800;max-width:22ch}
+h3{font-size:20px;font-weight:600}
+p{margin:0}
+.eyebrow{display:inline-block;font:700 12px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:14px}
+.lede{font-size:19px;color:var(--ink-2);max-width:60ch;margin-top:16px}
+
+/* top bar */
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px 0}
+.brand{display:flex;align-items:center;gap:10px;font:800 18px var(--display);text-decoration:none}
+.mark{display:grid;place-items:center;width:38px;height:38px;border-radius:10px;background:var(--red);color:var(--ground);font:800 15px var(--display);border:2px solid var(--ink);box-shadow:2px 2px 0 var(--ink);transform:rotate(-3deg)}
+.top nav{display:flex;gap:6px}
+.pill{display:inline-flex;align-items:center;font:600 14px var(--body);text-decoration:none;background:var(--ground);border:1.5px solid var(--ink);border-radius:999px;padding:6px 13px;white-space:nowrap}
+.pill:hover{background:var(--melon)}
+
+/* buttons */
+.btns{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px}
+.btn{display:inline-flex;align-items:center;gap:8px;font:700 16px var(--body);text-decoration:none;color:var(--ink);border:2px solid var(--ink);border-radius:12px;padding:13px 20px;box-shadow:4px 4px 0 var(--ink);transition:transform .08s,box-shadow .08s;cursor:pointer}
+.btn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--ink)}
+.btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
+.btn.primary{background:var(--orange);transform:rotate(-1deg)}
+.btn.primary:hover{transform:rotate(-1deg) translate(-1px,-1px)}
+.btn.ghost{background:var(--ground)}
+
+/* hero */
+.hero{padding:40px 0 80px;border-top:0}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+.hero h1{font-size:clamp(44px,7.4vw,88px);font-weight:800}
+.hero h1 .fee{color:var(--red);display:block}
+.hero .promise{font-size:clamp(18px,2.2vw,21px);color:var(--ink-2);margin-top:22px;max-width:46ch}
+.hero .fine{font-size:14px;color:var(--ink-2);margin-top:18px}
+
+/* phone-ish preview card (static sample, no live data) */
+.preview{background:var(--card);border:2px solid var(--ink);border-radius:22px;box-shadow:8px 8px 0 var(--ink);padding:18px;transform:rotate(1.2deg)}
+.preview .bar{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+.preview .tab{font:600 12px var(--body);border:1.5px solid var(--ink);border-radius:999px;padding:4px 10px;background:var(--ground)}
+.preview .tab.on{background:var(--ink);color:var(--ground)}
+.item{border-top:1px dashed var(--line);padding:12px 0}
+.item:first-of-type{border-top:0}
+.tag{display:inline-block;font:700 10.5px/1 var(--body);letter-spacing:.08em;text-transform:uppercase;padding:4px 7px;border-radius:6px;margin-bottom:6px}
+.tag.ans{background:#E7F2E4;color:#2D5A22}
+.tag.dl{background:var(--blush);color:var(--red)}
+.tag.disc{background:#F0E4DE;color:#7A5A52}
+.item p{font-size:14.5px;line-height:1.45}
+.item small{display:block;color:var(--ink-2);font-size:12px;margin-top:4px}
+.count{display:inline-block;font:700 12px var(--body);background:var(--orange);border:1.5px solid var(--ink);border-radius:8px;padding:2px 8px;margin-left:6px}
+.sample-note{font-size:12px;color:var(--ink-2);margin-top:10px;text-align:right}
+
+/* problem */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px}
+.card{background:var(--card);border:2px solid var(--ink);border-radius:16px;padding:24px;box-shadow:4px 4px 0 var(--ink)}
+.card .big{font:800 44px/1 var(--display);color:var(--red);margin-bottom:12px}
+.card p{color:var(--ink-2);margin-top:8px;font-size:16px}
+
+/* how it works */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:40px;counter-reset:s}
+.step{position:relative;padding:22px;border-radius:16px;background:var(--melon);border:1.5px solid var(--ink)}
+.step:nth-child(2){background:var(--apricot)}
+.step:nth-child(3){background:var(--blush)}
+.step:nth-child(4){background:#FFE7C7}
+.step::before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--ink);color:var(--ground);font:800 16px var(--display);margin-bottom:14px}
+.step p{font-size:15.5px;color:var(--ink-2);margin-top:8px}
+
+/* features */
+.feat{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:40px}
+.feat .card h3{display:flex;align-items:center;gap:10px}
+.dot{width:12px;height:12px;border-radius:50%;background:var(--orange);border:1.5px solid var(--ink);flex:none}
+
+/* won't do */
+.nope{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 28px;margin-top:36px;padding:0;list-style:none}
+.nope li{display:flex;gap:14px;align-items:flex-start;padding:16px 0;border-bottom:1px solid var(--line)}
+.nope .x{flex:none;display:grid;place-items:center;width:30px;height:30px;border-radius:8px;background:var(--red);color:var(--ground);font:800 16px var(--display)}
+.nope b{display:block}
+.nope span{color:var(--ink-2);font-size:15.5px}
+
+/* launch post quote */
+.post{margin-top:36px;background:var(--card);border:2px solid var(--ink);border-radius:18px;padding:28px;box-shadow:6px 6px 0 var(--orange);max-width:760px}
+.post .who{display:flex;align-items:center;gap:12px;margin-bottom:16px;font-weight:700}
+.post .who .mark{width:34px;height:34px;font-size:13px}
+.post .who small{display:block;font-weight:400;color:var(--ink-2);font-size:13px}
+.post p{white-space:pre-line;font-size:16.5px}
+
+/* final CTA */
+.cta{background:var(--ink);color:var(--ground);border-radius:24px;padding:48px 36px;margin:0 0 72px;display:grid;gap:18px;justify-items:start}
+.cta h2{color:var(--ground)}
+.cta p{color:#EBD3C9;max-width:56ch}
+.cta .btn{border-color:var(--ground);box-shadow:4px 4px 0 var(--orange)}
+.cta .btn.ghost{background:transparent;color:var(--ground)}
+
+footer{border-top:1px solid var(--line);padding:24px 0 40px;font-size:14px;color:var(--ink-2)}
+footer p+p{margin-top:6px}
+
+/*ASK-CSS-START*/
+/*ASK-CSS-END*/
+
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr;gap:40px}
+  .preview{transform:none;max-width:460px}
+  .steps{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:680px){
+  body{font-size:16px}
+  section{padding:56px 0}
+  .cards,.feat,.nope{grid-template-columns:1fr}
+  .top nav .pill.hide-sm{display:none}
+}
+@media (max-width:420px){
+  .wrap{padding:0 16px}
+  .steps{grid-template-columns:1fr}
+  .btn{width:100%;justify-content:center}
+  .post{padding:20px}
+  .cta{padding:32px 22px}
+  .brand span.long{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}.btn.primary,.preview,.mark{transform:none}}
+</style>
+</head>
+<body>
+
+<header class="wrap top">
+  <a class="brand" href="#top"><span class="mark">40L</span><span class="long">The 40L Question</span></a>
+  <nav aria-label="Sections">
+    <a class="pill hide-sm" href="#how">How it works</a>
+    <!--ASK-NAV-START--><!--ASK-NAV-END-->
+    <a class="pill" href="https://thebettercampus.netlify.app/40L_ROI/">Open the page</a>
+  </nav>
+</header>
+
+<main id="top">
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">For ISB placement season</span>
+      <h1>The 40L Question. <span class="fee">Answers worth your fee.</span></h1>
+      <p class="promise">The placement group has around 400 people, and most of what they post is noise. The 40L Question keeps only the official answers from the CAC and CAS and puts them on one page: the day's brief, every deadline with a countdown, and the placement rules you can search.</p>
+      <div class="btns">
+        <a class="btn primary" href="https://thebettercampus.netlify.app/40L_ROI/">Open The 40L Question →</a>
+        <!--ASK-HERO-START--><a class="btn ghost" href="#how">See how it works</a><!--ASK-HERO-END-->
+      </div>
+      <p class="fine">A student side project for the ISB Co'27 cohort. Not an official ISB, CAS or CAC product.</p>
+    </div>
+
+    <div class="preview" aria-label="Sample of the daily brief (illustrative, not live data)">
+      <div class="bar"><span class="tab on">Daily brief</span><span class="tab">Companies &amp; jobs</span><span class="tab">FAQ</span></div>
+      <div class="item">
+        <span class="tag dl">Deadline</span>
+        <p>Applications for a consulting role close tomorrow at 11:00 AM <span class="count">18 h</span></p>
+        <small>From the portal</small>
+      </div>
+      <div class="item">
+        <span class="tag ans">Answered · CAC</span>
+        <p><b>Which GPA goes to recruiters?</b> Overall GPA, as of the application deadline.</p>
+        <small>9:14 am</small>
+      </div>
+      <div class="item">
+        <span class="tag disc">Group discussion · not confirmed</span>
+        <p>Several people report the company form won't save. Try incognito.</p>
+        <small>2:40 pm</small>
+      </div>
+      <p class="sample-note">Illustrative sample · not live data</p>
+    </div>
+  </div>
+</section>
+
+<section id="problem">
+  <div class="wrap">
+    <span class="eyebrow">The problem</span>
+    <h2>The answer you need is somewhere in the group. Good luck finding it.</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="big">~80%</div>
+        <h3>of the group is noise</h3>
+        <p>"+1", "same doubt", repeats and chatter bury the few messages that matter.</p>
+      </div>
+      <div class="card">
+        <div class="big">1</div>
+        <h3>official answer, easy to miss</h3>
+        <p>The CAC or CAS answers once. Miss that message and you ask again, or trust a guess.</p>
+      </div>
+      <div class="card">
+        <div class="big">0</div>
+        <h3>margin for a wrong summary</h3>
+        <p>A classmate's AI summary once repeated the wrong counter rule for a top consulting firm. Counters are scarce.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <span class="eyebrow">How it works</span>
+    <h2>From a busy group to one page you can trust.</h2>
+    <div class="steps">
+      <div class="step"><h3>The group, read carefully</h3><p>Several times a day, a name-free copy of the placement group is checked for new questions and answers.</p></div>
+      <div class="step"><h3>Only official answers count</h3><p>An answer counts only if it comes from the CAC or CAS. Other students' replies are left out.</p></div>
+      <div class="step"><h3>Checked against the portal</h3><p>Job deadlines, stages and must-dos come from the placement portal, which is checked every hour.</p></div>
+      <div class="step"><h3>One page for you</h3><p>The daily brief, companies and jobs, and a searchable FAQ, all in one place.</p></div>
+    </div>
+
+    <div class="feat">
+      <div class="card"><h3><span class="dot"></span>Daily brief</h3><p>Deadline and JD changes, announcements, today's answers and open questions. At most 8 items a day, with a dot on what's new since you last looked.</p></div>
+      <div class="card"><h3><span class="dot"></span>Companies &amp; jobs</h3><p>Open roles, soonest deadline first, with a countdown that turns orange under 24 hours and red under 12. Stages, must-dos and each firm's Q&amp;As sit in one card.</p></div>
+      <div class="card"><h3><span class="dot"></span>FAQ</h3><p>The Placement Policy and general process answers, searchable in plain English: counters, clusters, offers, resumes, PPT rules.</p></div>
+      <div class="card"><h3><span class="dot"></span>Coming up</h3><p>Every deadline in one list: applications, expected shortlists, PPTs and tests.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="wont">
+  <div class="wrap">
+    <span class="eyebrow">What it won't do</span>
+    <h2>The rules that keep it trustworthy.</h2>
+    <ul class="nope">
+      <li><span class="x">✕</span><div><b>No guessing</b><span>If the CAC or CAS hasn't answered, it says "Not answered yet. Ask in the group."</span></div></li>
+      <li><span class="x">✕</span><div><b>No names</b><span>Questions are anonymous and committee members aren't put in the spotlight. A changed answer shows only "changed by &lt;first name&gt;".</span></div></li>
+      <li><span class="x">✕</span><div><b>No pay figures</b><span>Compensation questions point you to the placement portal.</span></div></li>
+      <li><span class="x">✕</span><div><b>No "most asked" rankings</b><span>Every question matters equally, so there are no counts per question.</span></div></li>
+      <li><span class="x">✕</span><div><b>Not official</b><span>It's a student project. The CAC notice board and CAS always win.</span></div></li>
+      <li><span class="x">✕</span><div><b>No replacing the group</b><span>The group stays where you ask. This is where you find what was already answered.</span></div></li>
+    </ul>
+  </div>
+</section>
+
+<section id="launch">
+  <div class="wrap">
+    <span class="eyebrow">The launch post</span>
+    <h2>What we told the batch.</h2>
+    <!-- LAUNCH-POST: replace the text below with A's final post from Task 2 of the workbook. -->
+    <figure class="post">
+      <div class="who"><span class="mark">40L</span><div>The 40L Question<small>Launch post</small></div></div>
+      <p>Placement season has started, and so has the endless scroll in the group.
+
+Somewhere in there is the one answer from the CAC you needed. The 40L Question keeps just those official CAC and CAS answers, puts every deadline on a countdown, and gives you a short daily brief so you don't miss anything important.
+
+One link. No scrolling. Not answered yet? Ask in the group, like always.</p>
+    </figure>
+  </div>
+</section>
+
+<!--ASK-SECTION-START-->
+<!--ASK-SECTION-END-->
+
+<div class="wrap">
+  <div class="cta">
+    <span class="eyebrow" style="color:var(--orange)">Placement week starts 30 Nov</span>
+    <h2>Stop scrolling. Start applying.</h2>
+    <p>Open the page before your next deadline. If something isn't there yet, the group is still one tap away.</p>
+    <div class="btns" style="margin-top:6px">
+      <a class="btn primary" href="https://thebettercampus.netlify.app/40L_ROI/">Open The 40L Question →</a>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><b>The 40L Question</b> · Answers worth your fee. Part of The Better Campus.</p>
+    <p>A student side project for the ISB Co'27 cohort. Not an official ISB, CAS or CAC product. The CAC notice board and CAS are the final word.</p>
+  </div>
+</footer>
+
+<!--ASK-JS-START-->
+<!--ASK-JS-END-->
+</body>
+</html>
