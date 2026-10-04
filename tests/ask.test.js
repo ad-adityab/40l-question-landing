@@ -79,6 +79,7 @@ await t("stats reads back asked and share answered (capped rows excluded)", asyn
   const real = m.db.exchanges.filter(x => ["answered", "not_found", "refused"].includes(x.outcome));
   const a = real.filter(x => x.outcome === "answered").length, nf = real.filter(x => x.outcome === "not_found").length;
   assert.equal(r.body.asked, real.length); assert.equal(r.body.share_answered, Math.round(a / (a + nf) * 100));
+  assert.ok(r.body.avg_input_tokens > 0 && r.body.avg_output_tokens > 0);
 });
 await t("an upstream error is stored but does not use up the visitor's questions", async () => {
   const V3 = "0f8e2a1c-4b7d-4e2a-9c1d-dddddddddddd";
