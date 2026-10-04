@@ -48,7 +48,7 @@ export default async function handler(req, res) {
 
     await sbInsert("exchanges", row({
       visitor, net, question, answer: out.answer, outcome: out.status, matched: out.cited,
-      candidates: candidates.map(c => c.id), inTok: g.inputTokens, outTok: g.outputTokens, started
+      candidates: candidates.map(c => c.id), inTok: g.inputTokens, outTok: g.outputTokens, model: g.model, started
     }));
 
     const cited = out.cited.map(id => {
@@ -69,7 +69,7 @@ export default async function handler(req, res) {
   }
 }
 
-function row({ visitor, net, question, answer, outcome, matched = [], candidates = [], inTok = 0, outTok = 0, started }) {
+function row({ visitor, net, question, answer, outcome, matched = [], candidates = [], inTok = 0, outTok = 0, model = MODEL, started }) {
   return {
     visitor_id: visitor,
     net_hash: net,
@@ -80,7 +80,7 @@ function row({ visitor, net, question, answer, outcome, matched = [], candidates
     candidate_ids: candidates,
     input_tokens: inTok,
     output_tokens: outTok,
-    model: MODEL,
+    model,
     latency_ms: Date.now() - started
   };
 }

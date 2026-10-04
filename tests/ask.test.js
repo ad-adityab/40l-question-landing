@@ -28,6 +28,13 @@ await t("system prompt, 300-token cap and JSON schema are sent to Gemini", async
   assert.equal(b.generationConfig.maxOutputTokens, 300);
   assert.equal(b.generationConfig.responseMimeType, "application/json");
 });
+await t("falls back to the next model when one is not found", async () => {
+  const real = globalThis.fetch; const tried = [];
+  globalThis.fetch = async (u, o) => { const s = String(u); if (s.includes("generativelanguage")) { tried.push(s.split("/models/")[1].split(":")[0]); if (tried.length === 1) return new Response("not found", { status: 404 }); } return real(u, o); };
+  const r = await call(ask, { body: { question: "When is placement week?", visitor_id: "0f8e2a1c-4b7d-4e2a-9c1d-eeeeeeeeeeee" }, ip: "8.8.8.8" });
+  globalThis.fetch = real;
+  assert.equal(r.status, 200); assert.equal(tried.length, 2); assert.equal(m.db.exchanges.at(-1).model, tried[1]);
+});
 await t("pay question is refused", async () => {
   const r = await call(ask, { body: { question: "What is the CTC for the consulting role?", visitor_id: V1 } });
   assert.equal(r.body.status, "refused"); assert.match(r.body.answer, /placement portal/);

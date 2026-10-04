@@ -23,5 +23,5 @@ No key is in this repo. The function reads three Vercel environment variables:
 ## Guardrails and limits
 - Answers only from the official entries, citing which ones; otherwise "Not answered yet. Ask in the group."
 - Refuses pay/CTC questions (points to the placement portal), questions about people, and anything off-topic. A server-side check also blocks any pay figure in an answer.
-- Gemini `gemini-2.5-flash-lite`, at most 300 output tokens.
+- Gemini `gemini-3.1-flash-lite` (override with `GEMINI_MODEL`), at most 300 output tokens.
 - 5 questions per visitor (random browser id), 15 per network per day (a one-way hash, no raw IP), 300 per day for the whole site.

@@ -5,7 +5,10 @@
 
 import crypto from "node:crypto";
 
-export const MODEL = "gemini-2.5-flash-lite";
+// gemini-2.5-flash-lite was shut down in July 2026; gemini-3.1-flash-lite is its GA successor.
+// GEMINI_MODEL (optional env var) overrides; the next models are tried only if one is not found (404).
+export const MODEL = process.env.GEMINI_MODEL || "gemini-3.1-flash-lite";
+const MODEL_FALLBACKS = [MODEL, "gemini-3.5-flash-lite", "gemini-flash-lite-latest"].filter((m, i, a) => a.indexOf(m) === i);
 export const MAX_OUTPUT_TOKENS = 300;
 export const PER_VISITOR_CAP = 5;      // questions per visitor (browser id), lifetime of the demo
 export const PER_NETWORK_DAILY_CAP = 15; // questions per hashed network per day (stops cap-dodging by clearing storage)
@@ -123,16 +126,21 @@ export async function askGemini(question, candidates) {
       maxOutputTokens: MAX_OUTPUT_TOKENS,
       responseMimeType: "application/json",
       responseSchema: RESPONSE_SCHEMA,
-      thinkingConfig: { thinkingBudget: 0 }
+      thinkingConfig: { thinkingLevel: "minimal" } // keep the 300-token budget for the answer, not for thinking
     }
   };
-  const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "x-goog-api-key": process.env.GEMINI_API_KEY },
-    body: JSON.stringify(body)
-  });
+  let r, model, lastErr = "";
+  for (model of MODEL_FALLBACKS) {
+    r = await callModel(model, body);
+    if (r.status === 400 && body.generationConfig.thinkingConfig) {
+      // Some models reject this thinking setting: retry once without it.
+      lastErr = await r.text().catch(() => "");
+      if (/thinking/i.test(lastErr)) { delete body.generationConfig.thinkingConfig; r = await callModel(model, body); }
+    }
+    if (r.status !== 404) break;
+  }
   if (!r.ok) {
-    const detail = (await r.text().catch(() => "")).replace(/\s+/g, " ").slice(0, 200);
+    const detail = (await r.text().catch(() => lastErr)).replace(/\s+/g, " ").slice(0, 200);
     throw new Error(`gemini ${r.status}: ${detail}`);
   }
   const data = await r.json();
@@ -143,8 +151,16 @@ export async function askGemini(question, candidates) {
   return {
     parsed,
     inputTokens: usage.promptTokenCount || 0,
-    outputTokens: usage.candidatesTokenCount || 0
+    outputTokens: usage.candidatesTokenCount || 0,
+    model
   };
+}
+function callModel(model, body) {
+  return fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "x-goog-api-key": process.env.GEMINI_API_KEY },
+    body: JSON.stringify(body)
+  });
 }
 
 // ---------- post-checks: the server enforces the guardrail even if the model slips ----------
