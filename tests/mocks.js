@@ -64,6 +64,7 @@ export function installMocks({ entriesFile, gemini = "scripted", log = false } =
       const mode = typeof gemini === "function" ? null : gemini;
       if (typeof gemini === "function") out = gemini(question, ids);
       else if (/salary|ctc|package|pay\b/i.test(question)) out = { status: "refused", answer: "I can't discuss pay. Check the placement portal for each role's details.", cited_ids: [] };
+      else if (/will i get|my chances|should i pick/i.test(question)) out = { status: "refused", answer: "I can't predict outcomes or give personal career advice. I answer questions about ISB's placement rules and process, like counters, deadlines and offers.", cited_ids: [] };
       else if (/python|poem|ignore|recipe/i.test(question)) out = { status: "refused", answer: "I only answer questions about the ISB placement process.", cited_ids: [] };
       else if (ids.length) out = { status: "answered", answer: "Mock answer from " + ids[0] + ".", cited_ids: [ids[0]] };
       else out = { status: "not_found", answer: "Not answered yet. Ask in the group.", cited_ids: [] };
