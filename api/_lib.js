@@ -45,7 +45,9 @@ export const FALLBACK = {
 // ---------- Supabase (PostgREST) ----------
 function sbHeaders(extra = {}) {
   const key = process.env.SUPABASE_SERVICE_KEY;
-  return { apikey: key, Authorization: `Bearer ${key}`, "Content-Type": "application/json", ...extra };
+  // New-style secret keys (sb_secret_...) go only in the apikey header; legacy service_role JWTs also go as a Bearer token.
+  const auth = key.startsWith("sb_") ? {} : { Authorization: `Bearer ${key}` };
+  return { apikey: key, ...auth, "Content-Type": "application/json", ...extra };
 }
 function sbUrl(path) {
   return `${process.env.SUPABASE_URL.replace(/\/$/, "")}/rest/v1/${path}`;

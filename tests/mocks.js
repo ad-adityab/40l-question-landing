@@ -38,8 +38,9 @@ export function installMocks({ entriesFile, gemini = "scripted", log = false } =
     const u = new URL(url);
     const method = (opts.method || "GET").toUpperCase();
     if (u.hostname.endsWith("supabase.co")) {
-      const auth = opts.headers?.Authorization || "";
-      if (auth !== `Bearer ${process.env.SUPABASE_SERVICE_KEY}`) return new Response("no", { status: 401 });
+      const k = process.env.SUPABASE_SERVICE_KEY;
+      if (opts.headers?.apikey !== k) return new Response("no", { status: 401 });
+      if (!k.startsWith("sb_") && opts.headers?.Authorization !== `Bearer ${k}`) return new Response("no", { status: 401 });
       const table = u.pathname.split("/").pop();
       if (!db[table]) return new Response("no table", { status: 404 });
       if (method === "POST") {
